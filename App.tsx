@@ -10,6 +10,8 @@ import ShopScreen from './Screens/Shop';
 import MainScreen from './Screens/Main';
 import React from 'react';
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import RegisterScreen from './Screens/Auth/Register';
+import LoginScreen from './Screens/Auth/Login';
  
 const RootStack = createNativeStackNavigator();
 
@@ -17,8 +19,10 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Main">
+      <RootStack.Navigator initialRouteName="Register">
         <RootStack.Screen name="Main" component={MainScreen} />
+        <RootStack.Screen name="Register" component={RegisterScreen} />
+        <RootStack.Screen name="Login" component={LoginScreen} />
         <RootStack.Screen name="Closet" component={ClosetScreen} />
         <RootStack.Screen name="Activity" component={ActivityScreen} />
         <RootStack.Screen name="Explore" component={ExploreScreen} />
