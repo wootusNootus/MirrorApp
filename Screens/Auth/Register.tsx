@@ -2,11 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView, Image, StyleSheet } from 'react-native';
 import { globalStyles, globalImageStyles } from '../../styles/global';
+import { useNavigation } from '@react-navigation/native';
 
-import { TextInput } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 
 const RegisterScreen = () => {
-    return (
+  const navigation = useNavigation()  
+  return (
         <SafeAreaView style={globalStyles.container}>
           <TextInput> Register Screen </TextInput>
           <Image
@@ -15,17 +17,20 @@ const RegisterScreen = () => {
             />
           <View style={globalStyles.separator} />
           <TextInput
-            label="Username"
-            secureTextEntry
-            left={<TextInput.Icon icon="account-cowboy-hat" />}
-            style={{ width: 300 }}
+              label="Username"
+              secureTextEntry
+              left={<TextInput.Icon icon="account-cowboy-hat" />}
+              style={{ width: 300 }}
            />
            <TextInput
-            label="Password"
-            secureTextEntry
-            left={<TextInput.Icon icon="security" />}
-            style={{ width: 300 }}
+              label="Password"
+              secureTextEntry
+              left={<TextInput.Icon icon="security" />}
+              style={{ width: 300 }}
            />
+           <Button mode="elevated" onPress={() => navigation.navigate('Main')}>
+              Register
+           </Button>
         </SafeAreaView>
       );
 }
