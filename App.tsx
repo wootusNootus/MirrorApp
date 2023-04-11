@@ -19,7 +19,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Register">
+      <RootStack.Navigator initialRouteName="Main">
         <RootStack.Screen name="Main" component={MainScreen} />
         <RootStack.Screen name="Register" component={RegisterScreen} />
         <RootStack.Screen name="Login" component={LoginScreen} />

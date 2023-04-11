@@ -1,11 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import Menu from '../components/Menu';
+import { Canvas } from '@react-three/fiber';
 
 const MainScreen = () => {
     return <View style = {styles.bottomContainer}>
         <Menu />
-    </View>
+        <Canvas> 
+            <mesh>
+                <sphereGeometry />
+                <meshStandardMaterial color="orange" />
+            </mesh> 
+        </Canvas>
+    </View> 
 }
 
 const styles = StyleSheet.create({
