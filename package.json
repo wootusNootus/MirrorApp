@@ -9,15 +9,18 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "^0.16.4",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@react-three/fiber": "^8.12.0",
     "@types/react-native": "^0.70.13",
     "expo": "~48.0.9",
+    "expo-auth-session": "^4.0.3",
     "expo-camera": "^13.2.1",
     "expo-file-system": "~15.2.2",
     "expo-gl": "~12.4.0",
     "expo-media-library": "^15.2.3",
+    "expo-secure-store": "^12.1.1",
     "expo-sharing": "^11.2.2",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
