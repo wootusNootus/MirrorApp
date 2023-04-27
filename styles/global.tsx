@@ -12,6 +12,12 @@ export const globalStyles = StyleSheet.create({
       color: '#F4F4F4',
       marginBottom: 30,
     },
+    buttonContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: 'transparent',
+      margin: 64,
+    },
     separator: {
       marginVertical: 30,
       height: 1,
@@ -23,6 +29,19 @@ export const globalStyles = StyleSheet.create({
     },
     textInput: {
       width: 300
+    },
+    button: {
+      flex: 1,
+      alignSelf: 'flex-end',
+      alignItems: 'center',
+    },
+    camera: {
+      flex: 1,
+    },
+    text: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: 'white',
     },
   });
   
