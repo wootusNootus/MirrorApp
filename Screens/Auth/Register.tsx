@@ -53,13 +53,7 @@ const RegisterScreen = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={globalStyles.container}
     >
-      <TextInput> Register Screen </TextInput>
-      <Image
-        style={globalImageStyles.logo}
-        source={{
-          uri: "https://media.licdn.com/dms/image/D5603AQH5_ncA4xAYfw/profile-displayphoto-shrink_800_800/0/1664149885550?e=2147483647&v=beta&t=PESaJXWYmnJd45iD3SBaNQ1ZNQNZbI0p9FkE7xAp8IA",
-        }}
-      />
+      <Button onPress={() => navigation.navigate("Login")}>Login</Button>
       <View style={globalStyles.separator} />
       <TextInput
         label="Email"
