@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mirrorrek-dev-215315-authRole",
+      "UnauthRoleArn": "arn:aws:iam::460978795381:role/amplify-mirrorrek-dev-215315-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::460978795381:role/amplify-mirrorrek-dev-215315-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mirrorrek-dev-215315-deployment",
+      "UnauthRoleName": "amplify-mirrorrek-dev-215315-unauthRole",
+      "StackName": "amplify-mirrorrek-dev-215315",
+      "StackId": "arn:aws:cloudformation:us-east-1:460978795381:stack/amplify-mirrorrek-dev-215315/51b7ff70-ec82-11ed-93b1-12db1a6de503",
+      "AmplifyAppId": "d38owwn3jkppw4"
+    },
+    "categories": {
+      "auth": {
+        "mirrorreka4b1d6bc": {}
+      }
+    }
+  }
+}
