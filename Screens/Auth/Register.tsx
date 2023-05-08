@@ -16,6 +16,7 @@ import { RootStackScreenProps } from "../../types";
 import { useSignUp } from "@clerk/clerk-expo";
 import { log } from "../../logger";
 import { addDoc, collection } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FIREBASE_DB } from "../../firebaseConfig";
 
@@ -46,6 +47,8 @@ const RegisterScreen = () => {
       const doc = addDoc(collection(FIREBASE_DB, "users"), {
         title: emailAddress,
       });
+      await AsyncStorage.setItem("email", emailAddress);
+
       navigation.navigate("Verify");
     } catch (err: any) {
       log("Error:> " + err?.status || "");

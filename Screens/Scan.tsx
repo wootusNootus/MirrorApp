@@ -8,26 +8,34 @@ import {
   Image,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
-import { Camera } from "expo-camera";
+import { Camera, ImageType } from "expo-camera";
 import { shareAsync } from "expo-sharing";
-import { getStorage, ref, uploadString } from "firebase/storage";
+import { getStorage, ref, uploadBytes, uploadString } from "firebase/storage";
 import * as MediaLibrary from "expo-media-library";
+import { useNavigation } from "@react-navigation/native";
+
 import { BrushAction, Configuration, PESDK } from "react-native-photoeditorsdk";
+import firebase from "firebase/compat/app";
 
 import { globalStyles, globalImageStyles } from "../styles/global";
+import {
+  RemoveBgError,
+  RemoveBgResult,
+  removeBackgroundFromImageFile,
+} from "remove.bg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// const outputFile = `${__dirname}/out/img-removed-from-file.png`;
 
 //remove bg code
-import axios from "axios";
-import FormData from "form-data";
-import fs from "fs";
 
 const ScanScreen = () => {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
-  const [photo, setPhoto] = useState();
-  const formData = new FormData();
+  const [photo, setPhoto] = useState(null);
   const storage = getStorage();
+  const [resultImageURI, setResultImageURI] = useState<string | null>(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -61,16 +69,62 @@ const ScanScreen = () => {
   };
 
   if (photo) {
-    let removeBackgroundSave = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-        const clothes = ref(storage, "clothing.jpg");
-        uploadString(clothes, photo.base64, "base64").then((snapshot) => {
-          console.log("Uploaded a blob or file!");
-        });
-      });
-    };
+    // const removeBackgroundSave = async () => {
+    //   formData.append("size", "auto");
+    //   const response = await fetch(photo.uri);
+    //   const blob = await response.blob();
+    //   formData.append(
+    //     "image_file",
+    //     fs.createReadStream(photo.uri),
+    //     path.basename(photo.uri)
+    //   );
+    //   const storageRef = ref(storage, "Shirt");
+    //   uploadBytes(storageRef, blob).then((snapshot) => {
+    //     console.log("Uploaded a blob or file!");
+    //   });
+    // };
+    const handleRemoveBackground = async () => {
+      const formData = new FormData();
 
+      try {
+        // Replace 'YOUR_API_KEY' with your actual API key
+        // const respnse = await fetch(photo.uri);
+        const value = await AsyncStorage.getItem("email");
+        // const blob = await respnse.blob();
+        const apiKey = "xyP9ShhYFswnSU5A4ccZWvuF";
+        const apiUrl = "https://api.remove.bg/v1.0/removebg";
+
+        formData.append("image_file", {
+          uri: photo.uri, // Replace with your actual image URI
+          type: ImageType.photo,
+          name: "image.jpg",
+        });
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "X-Api-Key": apiKey,
+          },
+          body: formData,
+        });
+        // console.log("Response:", response);
+
+        // console.log("sucess");
+        // console.log("Response:", response);
+        if (response.ok) {
+          const imageBlob = await response.blob();
+
+          const storageRef = ref(storage, value + "/clothing.jpg");
+          uploadBytes(storageRef, imageBlob).then((snapshot) => {
+            console.log("Uploaded a data_url string!");
+            navigation.navigate("Main");
+          });
+        } else {
+          console.error("Error:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
     return (
       <SafeAreaView style={styles.container}>
         <Image
@@ -78,7 +132,7 @@ const ScanScreen = () => {
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
         {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={removeBackgroundSave} />
+          <Button title="Save" onPress={handleRemoveBackground} />
         ) : undefined}
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
       </SafeAreaView>
