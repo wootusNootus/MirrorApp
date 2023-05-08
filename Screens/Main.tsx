@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber';
 
 const MainScreen = () => {
     return <View style = {styles.bottomContainer}>
-        <Menu />
+        <Menu/>
         <Canvas> 
         </Canvas>
     </View> 
