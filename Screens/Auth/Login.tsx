@@ -24,6 +24,7 @@ const LoginScreen = () => {
       });
 
       await setSession(completeSignIn.createdSessionId);
+
       navigation.navigate("Main");
     } catch (err: any) {
       log("Error:> " + err?.status || "");

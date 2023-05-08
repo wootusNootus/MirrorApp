@@ -15,6 +15,8 @@ import { Text, TouchableOpacity } from "react-native";
 import { RootStackScreenProps } from "../../types";
 import { useSignUp } from "@clerk/clerk-expo";
 import { log } from "../../logger";
+import { addDoc, collection } from "firebase/firestore";
+import { FIREBASE_DB } from "../../firebaseConfig";
 
 import { Button, TextInput } from "react-native-paper";
 
@@ -40,7 +42,9 @@ const RegisterScreen = () => {
 
       // https://docs.clerk.dev/popular-guides/passwordless-authentication
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
+      const doc = addDoc(collection(FIREBASE_DB, "users"), {
+        title: emailAddress,
+      });
       navigation.navigate("Verify");
     } catch (err: any) {
       log("Error:> " + err?.status || "");
