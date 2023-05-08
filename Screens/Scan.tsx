@@ -44,17 +44,51 @@ const ScanScreen = () => {
   };
 
   if (photo) {
-    let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
+    let submitToGoogle = () => {
+      try {
+        let body = JSON.stringify({
+          requests: [
+            {
+              features: [
+                { type: 'LABEL_DETECTION', maxResults: 1 },
+              ],
+              image: {
+                source: {
+                  imageUri: [photo]
+                }
+              }
+            }
+          ]
+        });
+        let response = await fetch(
+          'https://vision.googleapis.com/v1/images:annotate?key=' +
+            '4de341cab724c0dfc2ffb127532815da632347aa',
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: body
+          }
+        );
+        let responseJson = await response.json();
+        console.log(responseJson);
+        this.setState({
+          googleResponse: responseJson,
+          uploading: false
+        });
+      } catch (error) {
+        console.log(error);
+      }
     };
+  }
 
     return (
       <SafeAreaView style={styles.container}>
         <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
         {hasMediaLibraryPermission ? 
-        <Button title="Save" onPress={savePhoto} /> 
+        <Button title="Analyze!" onPress={() => this.submitToGoogle()} /> 
         : undefined}
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
       </SafeAreaView>
