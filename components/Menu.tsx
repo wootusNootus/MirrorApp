@@ -32,7 +32,7 @@ const Menu = () => {
         <TouchableOpacity
             onPress={() => {
                 // go to scan
-                navigation.navigate('ScanTestAmplify');
+                navigation.navigate('Scan');
             }}>
             <Button icon="camera"> </Button>
         </TouchableOpacity>
