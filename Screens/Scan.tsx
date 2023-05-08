@@ -43,8 +43,7 @@ const ScanScreen = () => {
     setPhoto(newPhoto);
   };
 
-  if (photo) {
-    let submitToGoogle = () => {
+  const submitToGoogle = () => {
       try {
         let body = JSON.stringify({
           requests: [
@@ -62,7 +61,7 @@ const ScanScreen = () => {
         });
         let response = await fetch(
           'https://vision.googleapis.com/v1/images:annotate?key=' +
-            '4de341cab724c0dfc2ffb127532815da632347aa',
+             Environment['GOOGLE_CLOUD_VISION_API_KEY'],
           {
             headers: {
               Accept: 'application/json',
@@ -81,14 +80,14 @@ const ScanScreen = () => {
       } catch (error) {
         console.log(error);
       }
-    };
-  }
+  };
+  
 
     return (
       <SafeAreaView style={styles.container}>
         <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
         {hasMediaLibraryPermission ? 
-        <Button title="Analyze!" onPress={() => this.submitToGoogle()} /> 
+        <Button title="Analyze!" onPress={() => submitToGoogle()} /> 
         : undefined}
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
       </SafeAreaView>
