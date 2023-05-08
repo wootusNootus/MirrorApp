@@ -28,6 +28,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           <RootStack.Navigator initialRouteName="Shop">
+          <RootStack.Navigator initialRouteName="Register">
             <RootStack.Screen name="Main" component={MainScreen} />
             <RootStack.Screen name="Register" component={RegisterScreen} />
             <RootStack.Screen name="Login" component={LoginScreen} />
@@ -66,4 +67,3 @@ const styles = StyleSheet.create({
     marginTop: 150,
   },
 });
- 
