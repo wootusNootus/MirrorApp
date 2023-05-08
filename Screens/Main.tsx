@@ -7,10 +7,6 @@ const MainScreen = () => {
     return <View style = {styles.bottomContainer}>
         <Menu />
         <Canvas> 
-            <mesh>
-                <sphereGeometry />
-                <meshStandardMaterial color="orange" />
-            </mesh> 
         </Canvas>
     </View> 
 }

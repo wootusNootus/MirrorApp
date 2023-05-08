@@ -11,14 +11,21 @@ import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
+import { BrushAction, Configuration, PESDK } from "react-native-photoeditorsdk";
 
 import { globalStyles, globalImageStyles } from "../styles/global";
+
+//remove bg code
+import axios from 'axios';
+import FormData from 'form-data';
+import fs from 'fs';
 
 const ScanScreen = () => {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
+  const formData = new FormData();
 
   useEffect(() => {
     (async () => {
@@ -42,7 +49,7 @@ const ScanScreen = () => {
 
   let takePic = async () => {
     let options = {
-      quality: 1,
+      quality: 0.5,
       base64: true,
       exif: false,
     };
@@ -52,7 +59,7 @@ const ScanScreen = () => {
   };
 
   if (photo) {
-    let savePhoto = () => {
+    let removeBackgroundSave = () => {
       MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
         setPhoto(undefined);
       });
@@ -65,7 +72,7 @@ const ScanScreen = () => {
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
         {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={savePhoto} />
+          <Button title="Save" onPress={removeBackgroundSave} />
         ) : undefined}
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
       </SafeAreaView>

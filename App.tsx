@@ -27,7 +27,7 @@ export default function App() {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <PaperProvider theme={theme}>
         <NavigationContainer>
-          <RootStack.Navigator initialRouteName="Scan">
+          <RootStack.Navigator initialRouteName="Explore">
             <RootStack.Screen name="Main" component={MainScreen} />
             <RootStack.Screen name="Register" component={RegisterScreen} />
             <RootStack.Screen name="Login" component={LoginScreen} />
