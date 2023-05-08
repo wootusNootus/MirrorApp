@@ -27,7 +27,11 @@ export default function App() {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <PaperProvider theme={theme}>
         <NavigationContainer>
+<<<<<<< Updated upstream
           <RootStack.Navigator initialRouteName="Main">
+=======
+          <RootStack.Navigator initialRouteName="Scan">
+>>>>>>> Stashed changes
             <RootStack.Screen name="Main" component={MainScreen} />
             <RootStack.Screen name="Register" component={RegisterScreen} />
             <RootStack.Screen name="Login" component={LoginScreen} />

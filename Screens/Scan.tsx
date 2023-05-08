@@ -10,15 +10,16 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
+import { getStorage, ref, uploadString } from "firebase/storage";
 import * as MediaLibrary from "expo-media-library";
 import { BrushAction, Configuration, PESDK } from "react-native-photoeditorsdk";
 
 import { globalStyles, globalImageStyles } from "../styles/global";
 
 //remove bg code
-import axios from 'axios';
-import FormData from 'form-data';
-import fs from 'fs';
+import axios from "axios";
+import FormData from "form-data";
+import fs from "fs";
 
 const ScanScreen = () => {
   let cameraRef = useRef();
@@ -26,6 +27,7 @@ const ScanScreen = () => {
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
   const formData = new FormData();
+  const storage = getStorage();
 
   useEffect(() => {
     (async () => {
@@ -62,6 +64,10 @@ const ScanScreen = () => {
     let removeBackgroundSave = () => {
       MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
         setPhoto(undefined);
+        const clothes = ref(storage, "clothing.jpg");
+        uploadString(clothes, photo.base64, "base64").then((snapshot) => {
+          console.log("Uploaded a blob or file!");
+        });
       });
     };
 

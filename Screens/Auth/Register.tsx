@@ -16,6 +16,7 @@ import { RootStackScreenProps } from "../../types";
 import { useSignUp } from "@clerk/clerk-expo";
 import { log } from "../../logger";
 import { addDoc, collection } from "firebase/firestore";
+
 import { FIREBASE_DB } from "../../firebaseConfig";
 
 import { Button, TextInput } from "react-native-paper";
