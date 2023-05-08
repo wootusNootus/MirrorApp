@@ -1,8 +1,10 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
 import React from "react";
 import Menu from "../components/Menu";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const image = {uri: 'https://reactjs.org/logo-og.png'};
 
 const MainScreen = () => {
   async function setImage() {
@@ -38,26 +40,31 @@ const MainScreen = () => {
   }
   setImage();
 
+  
+
   return (
     <View style={localStyles.bottomContainer}>
       <Menu />
-      <Image
-        style={localStyles.userImage}
-        id="myimg"
-        source={{ uri: "https://illustoon.com/photo/8211.png" }}
-      />
+      <ImageBackground source={ image } style={localStyles.userImage}>
+        <Text> Inside </Text>
+      </ImageBackground>
     </View>
+
   );
 };
 
 const localStyles = StyleSheet.create({
   bottomContainer: {
     flex: 1,
-    justifyContent: "flex-end",
   },
   userImage: {
     flex: 5,
   },
+  clothingImage: {
+    zIndex: 2,
+    position: 'absolute',
+    bottom: 32,
+  }
 });
 
 export default MainScreen;
