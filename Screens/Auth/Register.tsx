@@ -44,9 +44,6 @@ const RegisterScreen = () => {
 
       // https://docs.clerk.dev/popular-guides/passwordless-authentication
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      const doc = addDoc(collection(FIREBASE_DB, "users"), {
-        title: emailAddress,
-      });
       await AsyncStorage.setItem("email", emailAddress);
 
       navigation.navigate("Verify");

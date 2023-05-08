@@ -5,6 +5,7 @@ import { log } from "../../logger";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../types";
 import { globalStyles, globalImageStyles } from "../../styles/global";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const { signIn, setSession, isLoaded } = useSignIn();
@@ -24,7 +25,6 @@ const LoginScreen = () => {
       });
 
       await setSession(completeSignIn.createdSessionId);
-
       navigation.navigate("Main");
     } catch (err: any) {
       log("Error:> " + err?.status || "");

@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { BrushAction, Configuration, PESDK } from "react-native-photoeditorsdk";
 import firebase from "firebase/compat/app";
+import { v4 as uuid } from "uuid";
 
 import { globalStyles, globalImageStyles } from "../styles/global";
 import {
@@ -24,6 +25,14 @@ import {
   removeBackgroundFromImageFile,
 } from "remove.bg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { FIREBASE_DB } from "../firebaseConfig";
 // const outputFile = `${__dirname}/out/img-removed-from-file.png`;
 
 //remove bg code
@@ -36,7 +45,8 @@ const ScanScreen = () => {
   const storage = getStorage();
   const [resultImageURI, setResultImageURI] = useState<string | null>(null);
   const navigation = useNavigation();
-
+  const unique_id = uuid();
+  const small_id = unique_id.slice(0, 8);
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -113,9 +123,17 @@ const ScanScreen = () => {
         if (response.ok) {
           const imageBlob = await response.blob();
 
-          const storageRef = ref(storage, value + "/clothing.jpg");
+          const storageRef = ref(storage, value + "/" + small_id + ".jpg");
+          // const doc = addDoc(collection(FIREBASE_DB, "users"), {
+          //   title: emailAddress,
+          // });
+
+          const ShirtRef = doc(FIREBASE_DB, "user", value);
+          await updateDoc(ShirtRef, {
+            arrayShirtID: arrayUnion(small_id),
+          });
           uploadBytes(storageRef, imageBlob).then((snapshot) => {
-            console.log("Uploaded a data_url string!");
+            console.log("Uploaded a Blob!");
             navigation.navigate("Main");
           });
         } else {
@@ -166,3 +184,6 @@ const styles = StyleSheet.create({
 });
 
 export default ScanScreen;
+
+//adds specifaclly a shirt
+//TODO: only adds shirts needs to have seperate page to add other things.
