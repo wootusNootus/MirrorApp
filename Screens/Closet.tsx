@@ -2,19 +2,10 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import * as React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BottomNavigation, Text } from "react-native-paper";
-import { Image, StyleSheet } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { useState } from "react";
 
-const MusicRoute = () => {
-  const localStyles = StyleSheet.create({
-    bottomContainer: {
-      flex: 1,
-      justifyContent: "flex-end",
-    },
-    userImage: {
-      flex: 5,
-    },
-  });
+const TopsRoute = () => {
   const [photoUrl, setPhotoUrl] = useState(
     "https://reactnative.dev/img/tiny_logo.png"
   );
@@ -50,29 +41,41 @@ const MusicRoute = () => {
         );
       });
   }
+
   setImage();
-  return <Image style={localStyles.userImage} source={{ uri: photoUrl }} />;
+
+  ////<Image style={localStyles.userImage} source={{ uri: photoUrl }} /> praneet display 
+
+  return (
+    <View>
+      <Image style={localStyles.userImage} source={{ uri: photoUrl }} />
+      <Image style={localStyles.userImage} source={{ uri: photoUrl }} />
+    </View>
+  );
 };
 
-const AlbumsRoute = () => <Text>Pants/Skirts Displayed</Text>;
+const BottomsRoute = () => <Text>Pants/Skirts Displayed</Text>;
 
-const RecentsRoute = () => <Text>Shoes Displayed</Text>;
+const ShoesRoute = () => <Text>Shoes Displayed</Text>;
 
-const NotificationsRoute = () => <Text>Accessories Displayed</Text>;
+const AccessoryRoute = () => <Text>Accessories Displayed</Text>;
 
 const ClosetScreen = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
-      key: "music",
+      key: "top",
       title: "Tops",
       focusedIcon: "tshirt-crew-outline",
       unfocusedIcon: "tshirt-crew",
     },
-    { key: "albums", title: "Bottoms", focusedIcon: "help" },
-    { key: "recents", title: "Shoes", focusedIcon: "shoe-sneaker" },
+
+    { key: "bottom", title: "Bottoms", focusedIcon: "help" },
+
+    { key: "shoe", title: "Shoes", focusedIcon: "shoe-sneaker" },
+
     {
-      key: "notifications",
+      key: "accessory",
       title: "Accessories",
       focusedIcon: "treasure-chest",
       unfocusedIcon: "treasure-chest",
@@ -80,10 +83,10 @@ const ClosetScreen = () => {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
-    notifications: NotificationsRoute,
+    top: TopsRoute,
+    bottom: BottomsRoute,
+    shoe: ShoesRoute,
+    accessory: AccessoryRoute,
   });
 
   return (
@@ -94,6 +97,20 @@ const ClosetScreen = () => {
     />
   );
 };
+
+const localStyles = StyleSheet.create({
+  bottomContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  userImage: {
+    flex: 5,
+  },
+  displayImage: {
+    flex: 1,
+    justifyContent: "space-evenly",
+  },
+});
 
 export default ClosetScreen;
 

@@ -4,7 +4,7 @@ import Menu from "../components/Menu";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const image = {uri: 'https://reactjs.org/logo-og.png'};
+const image = {uri: 'https://cdn.pixabay.com/photo/2014/03/24/13/42/male-294095_1280.png'};
 
 const MainScreen = () => {
   async function setImage() {
@@ -46,7 +46,12 @@ const MainScreen = () => {
     <View style={localStyles.bottomContainer}>
       <Menu />
       <ImageBackground source={ image } style={localStyles.userImage}>
-        <Text> Inside </Text>
+        <View style = {localStyles.overlay}>
+          <Image style = {localStyles.bottomImage} source = {{ uri: 'https://www.pngmart.com/files/16/Denim-Jeans-PNG-Clipart.png' }} />
+        </View>
+        <View style = {localStyles.overlay}>
+          <Image style = {localStyles.topImage} source = {{ uri: 'https://content.mycutegraphics.com/graphics/clothing/pink-tshirt.png' }} />
+        </View>
       </ImageBackground>
     </View>
 
@@ -58,13 +63,33 @@ const localStyles = StyleSheet.create({
     flex: 1,
   },
   userImage: {
-    flex: 5,
-  },
-  clothingImage: {
-    zIndex: 2,
+    width: 200,
+    height: 400,
+    alignItems: 'stretch',
     position: 'absolute',
-    bottom: 32,
-  }
+    top: 150,
+    left: 80,
+  },
+  topImage: {
+    resizeMode: 'center',
+    height: 170,
+    width: 320,
+    position: 'absolute',
+    top: 60,
+    left: -60,
+  },
+  bottomImage: {
+    resizeMode: 'center',
+    height: 200,
+    width: 350,
+    position: 'absolute',
+    top: 200,
+    left: -75,
+  },
+  overlay: {
+    opacity: 1,
+    justifycontent: 'center',
+  },
 });
 
 export default MainScreen;
