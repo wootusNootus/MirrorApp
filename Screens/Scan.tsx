@@ -94,7 +94,7 @@ const ScanScreen = () => {
     //     console.log("Uploaded a blob or file!");
     //   });
     // };
-    const handleRemoveBackground = async () => {
+    async function handleRemoveBackground(clothingType: string) {
       const formData = new FormData();
 
       try {
@@ -124,15 +124,27 @@ const ScanScreen = () => {
         if (response.ok) {
           const imageBlob = await response.blob();
 
-          const storageRef = ref(storage, value + "/" + small_id + ".jpg");
+          const storageRef = ref(
+            storage,
+            value + "/" + clothingType + "/" + small_id + ".jpg"
+          );
           // const doc = addDoc(collection(FIREBASE_DB, "users"), {
           //   title: emailAddress,
           // });
-
-          const ShirtRef = doc(FIREBASE_DB, "users", value);
-          await updateDoc(ShirtRef, {
-            arrayShirtID: arrayUnion(small_id),
-          });
+          const clohingRef = doc(FIREBASE_DB, "users", value);
+          if (clothingType === "Shirt") {
+            await updateDoc(clohingRef, {
+              arrayShirtID: arrayUnion(small_id),
+            });
+          } else if (clothingType === "Pant") {
+            await updateDoc(clohingRef, {
+              arrayPantID: arrayUnion(small_id),
+            });
+          } else {
+            await updateDoc(clohingRef, {
+              arrayShoeID: arrayUnion(small_id),
+            });
+          }
           uploadBytes(storageRef, imageBlob).then((snapshot) => {
             console.log("Uploaded a Blob!");
             navigation.navigate("Main");
@@ -143,7 +155,17 @@ const ScanScreen = () => {
       } catch (error) {
         console.error("Error:", error);
       }
+    }
+    const onShirtPressed = () => {
+      handleRemoveBackground("Shirt");
     };
+    const onPantPressed = () => {
+      handleRemoveBackground("Pant");
+    };
+    const onShoesPressed = () => {
+      handleRemoveBackground("Shoes");
+    };
+
     return (
       <SafeAreaView style={styles.container}>
         <Image
@@ -151,7 +173,13 @@ const ScanScreen = () => {
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
         {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={handleRemoveBackground} />
+          <Button title="Shirt" onPress={onShirtPressed} />
+        ) : undefined}
+        {hasMediaLibraryPermission ? (
+          <Button title="Pant" onPress={onPantPressed} />
+        ) : undefined}
+        {hasMediaLibraryPermission ? (
+          <Button title="Shoes" onPress={onShoesPressed} />
         ) : undefined}
         <Button title="Discard" onPress={() => setPhoto(undefined)} />
       </SafeAreaView>
