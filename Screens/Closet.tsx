@@ -96,6 +96,7 @@
 // };
 
 // export default ClosetScreen;
+
 import * as React from "react";
 import {
   View,
@@ -104,6 +105,7 @@ import {
   StyleSheet,
   Platform,
   Easing,
+  TouchableHighlight,
 } from "react-native";
 import { Appbar, BottomNavigation, Menu, useTheme } from "react-native-paper";
 import ScreenWrapper from "../ScreenWrapper";
@@ -127,6 +129,10 @@ type Props = {
   navigation: StackNavigationProp<{}>;
 };
 
+const handlePress = () => {
+  // add Firebase logic here, Praneet
+}
+
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const PhotoGallery = ({ route }: Route) => {
@@ -138,7 +144,7 @@ const PhotoGallery = ({ route }: Route) => {
     <ScreenWrapper contentContainerStyle={styles.content}>
       {PHOTOS.map((uri) => (
         <View key={uri} style={styles.item}>
-          <Image source={{ uri }} style={styles.photo} />
+            <Image source={{ uri }} style={styles.photo} />
         </View>
       ))}
     </ScreenWrapper>
@@ -158,36 +164,35 @@ const BottomNavigationExample = ({ navigation }: Props) => {
   const [routes] = React.useState<RoutesState>([
     {
       key: "album",
-      title: "Album",
-      focusedIcon: "image-album",
+      title: "TOPS",
+      focusedIcon: "tshirt-crew",
       ...(!isV3 && { color: "#6200ee" }),
     },
     {
       key: "library",
-      title: "Library",
-      focusedIcon: "inbox",
-      badge: true,
+      title: "BOTTOMS",
+      focusedIcon: "dresser",
       ...(isV3
-        ? { unfocusedIcon: "inbox-outline" }
+        ? { unfocusedIcon: "dresser-outline" }
         : {
             color: "#2962ff",
           }),
     },
     {
       key: "favorites",
-      title: "Favorites",
-      focusedIcon: "heart",
+      title: "SHOES",
+      focusedIcon: "shoe-sneaker",
       ...(isV3
-        ? { unfocusedIcon: "heart-outline" }
+        ? { unfocusedIcon: "shoe-sneaker" }
         : {
             color: "#00796b",
           }),
     },
     {
       key: "purchased",
-      title: "Purchased",
-      focusedIcon: "shopping",
-      ...(isV3 ? { unfocusedIcon: "shopping-outline" } : { color: "#c51162" }),
+      title: "ACCESSORIES",
+      focusedIcon: "watch",
+      ...(isV3 ? { unfocusedIcon: "watch" } : { color: "#c51162" }),
     },
   ]);
 
@@ -201,7 +206,7 @@ const BottomNavigationExample = ({ navigation }: Props) => {
     <View style={styles.screen}>
       <Appbar.Header elevated>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Bottom Navigation" />
+        <Appbar.Content title="Closet Screen" />
         <Menu
           visible={menuVisible}
           onDismiss={() => setMenuVisible(false)}
