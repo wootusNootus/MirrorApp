@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { BrushAction, Configuration, PESDK } from "react-native-photoeditorsdk";
 import firebase from "firebase/compat/app";
+import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
 
 import { globalStyles, globalImageStyles } from "../styles/global";
@@ -128,7 +129,7 @@ const ScanScreen = () => {
           //   title: emailAddress,
           // });
 
-          const ShirtRef = doc(FIREBASE_DB, "user", value);
+          const ShirtRef = doc(FIREBASE_DB, "users", value);
           await updateDoc(ShirtRef, {
             arrayShirtID: arrayUnion(small_id),
           });
