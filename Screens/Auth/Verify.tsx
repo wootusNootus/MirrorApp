@@ -7,6 +7,9 @@ import { Button, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, Image, StyleSheet } from "react-native";
 import { globalStyles, globalImageStyles } from "../../styles/global";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FIREBASE_DB } from "../../firebaseConfig";
 
 const Verify = () => {
   const { isLoaded, signUp, setSession } = useSignUp();
@@ -22,13 +25,22 @@ const Verify = () => {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
+      const emailAddress = await AsyncStorage.getItem("email");
 
       await setSession(completeSignUp.createdSessionId);
+      console.log("email: " + emailAddress);
+      await setDoc(doc(FIREBASE_DB, "users", emailAddress), {
+        email: emailAddress,
+        arrayShirtID: [],
+        arrayPantID: [],
+        arrayShoeID: [],
+      });
 
       navigation.navigate("Main");
     } catch (err: any) {
       log("Error:> " + err?.status || "");
       log("Error:> " + err?.errors ? JSON.stringify(err.errors) : err);
+      console.log("Error: " + err);
     }
   };
   const buttonstyles = StyleSheet.create({
